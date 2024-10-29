@@ -32,6 +32,22 @@ const App: React.FC = () => {
     }
   }
 
+  const removeTodo = (id: number): void => {
+    setTodos(todos.filter(todo => todo.id !== id))
+  }
+
+  const toggleTodo = (id: number): void => {
+    setTodos(todos.map(todo => {
+      if (todo.id !== id) return todo;
+
+      return {
+        ...todo,
+        complete: !todo.complete
+      }
+    }))
+  }
+ 
+
   //inputRef и этот useEffect тут применён, для того, чтобы при перезагрузки страницы поле инпут было сразу в фокусе
   useEffect(() => {
     if (inputRef.current) {
@@ -46,7 +62,7 @@ const App: React.FC = () => {
         <button onClick={addTodo}>Add</button>
       </div>
 
-      <TodoList items={todos} />
+      <TodoList items={todos} removeTodo={removeTodo} toggleTodo={toggleTodo} />
     </div>
   )
 }
